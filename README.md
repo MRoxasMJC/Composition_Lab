@@ -1,13 +1,12 @@
-# Inheritance_Lab: Bank Account System
-
 ## Overview
-This is a simple C++ banking system demonstrating **inheritance, polymorphism, and operator overloading**.  
+This is a simple C++ banking system demonstrating **inheritance, polymorphism, operator overloading, and composition**.  
 Users can create **Checking** and **Savings** accounts, deposit, withdraw, and view account details.
 
 The system uses:
 - `BankAccount` (base class)  
 - `CheckingAccount` (derived, applies a transaction fee)  
 - `SavingsAccount` (derived, calculates interest)  
+- `Transaction` (composed by BankAccount)
 - A vector of `BankAccount*` pointers to store multiple account objects.  
 
 ---
