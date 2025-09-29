@@ -160,21 +160,6 @@ void logout(BankAccount *&currentUser, bool &isLogged) {
     }
 }
 
-void saveTransaction(std::string name, std::string type, double amount) {
-    Transaction t; 
-    
-    // calculate the current time
-    const auto now = std::chrono::system_clock::now();
-    const std::time_t t_c = std::chrono::system_clock::to_time_t(now);
-    std::string strTime = std::ctime(&t_c);
-    
-    t.name = name;
-    t.type = type;
-    t.amount += amount;
-    
-    
-}
-
 void makeDeposit(BankAccount *&currentUser, bool isLogged) {
     if (isLogged) {
         double depositInp;
