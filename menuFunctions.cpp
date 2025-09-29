@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <chrono>
 #include "menuFunctions.h"
 
 // testers
@@ -159,6 +160,21 @@ void logout(BankAccount *&currentUser, bool &isLogged) {
     }
 }
 
+void saveTransaction(std::string name, std::string type, double amount) {
+    Transaction t; 
+    
+    // calculate the current time
+    const auto now = std::chrono::system_clock::now();
+    const std::time_t t_c = std::chrono::system_clock::to_time_t(now);
+    std::string strTime = std::ctime(&t_c);
+    
+    t.name = name;
+    t.type = type;
+    t.amount += amount;
+    
+    
+}
+
 void makeDeposit(BankAccount *&currentUser, bool isLogged) {
     if (isLogged) {
         double depositInp;
@@ -172,8 +188,8 @@ void makeDeposit(BankAccount *&currentUser, bool isLogged) {
             return;
         }
         
-        // currentUser->deposit(depositInp); 
         *currentUser += depositInp;
+        
         std::cout << "--Deposit of $" << depositInp << " successful." << std::endl;
     } else {
         std::cout << "--You are not logged in!" << std::endl;
@@ -245,6 +261,7 @@ void printMenuChoices(const BankAccount *currentUser, bool isLogged) {
         std::cout << "Enter 5: Withdraw" << std::endl;
         std::cout << "Enter 6: Print User Details" << std::endl;
         std::cout << "Enter 7: Print all Users" << std::endl;
+        std::cout << "Enter 8: View Transaction History" << std::endl;
         std::cout << "Enter -1: Quit" << std::endl;
 }
 
@@ -265,3 +282,13 @@ int getMenuChoice(int choice) {
     return choice;
 }
 
+void printTransactionHistory(BankAccount *&currentUser, bool isLogged) {
+    // print transaction history
+    if (!isLogged) {
+        std::cout << "--You are not logged in!" << std::endl;
+        return;
+    }
+    
+    
+    currentUser->printHistory();
+}

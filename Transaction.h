@@ -6,6 +6,7 @@
 
 class Transaction {
     public:
+        std::string name;
         std::string type;
         double amount;      
         std::string timestamp;

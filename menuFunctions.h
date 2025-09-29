@@ -4,6 +4,7 @@
 #include "BankAccount.h"
 #include "CheckingAccount.h"
 #include "SavingsAccount.h"
+#include "Transaction.h";
 
 // testers
 void testBankAccountClass();
@@ -23,6 +24,7 @@ void printUserBalance(const BankAccount *currentUser, bool isLogged);
 void printCurrentUser(const BankAccount *currentUser, bool isLogged);
 void printAllUsers(const std::vector<BankAccount*> Bank);
 void printMenuChoices(const BankAccount *currentUser, bool isLogged);
+void printTransactionHistory(BankAccount *&currentUser, bool isLogged);
 int getMenuChoice(int choice);
 
 #endif

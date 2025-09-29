@@ -7,6 +7,7 @@
 #include "menuFunctions.h"
 #include "CheckingAccount.h"
 #include "SavingsAccount.h"
+#include "Transaction.h"
 
 
 int main() {
@@ -44,6 +45,9 @@ int main() {
                 break;  
             case 7:
                 printAllUsers(TheBank);
+                break;
+            case 8:
+                printTransactionHistory(currentUser, isLogged);
                 break;
             case -1:
                 break;

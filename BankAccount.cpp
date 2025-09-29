@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "BankAccount.h"
+#include "Transaction.h"
 
 // define special members of BankAccount
 BankAccount::BankAccount() { // default constructor sets accountHolderName, accountNumber, and balance
@@ -23,7 +24,27 @@ BankAccount::~BankAccount() {
 
 // define member functions of BankAccount
 void BankAccount::setAccountHolderName(std::string accHolderNameInp) { accountHolderName = accHolderNameInp; }
-void BankAccount::deposit(double depositAmount) { balance += depositAmount; }
+
+void BankAccount::saveTransaction(std::string name, std::string type, double amount) {
+    // calculate time. 
+    const auto now = std::chrono::system_clock::now();
+    const std::time_t t_c = std::chrono::system_clock::to_time_t(now);
+    std::string strTime = std::ctime(&t_c);
+    
+    // save the transaction and push it to the vector. 
+    Transaction t;
+    t.name = accountHolderName;
+    t.type = type;
+    t.amount = amount;
+    t.timestamp = strTime;
+    transactionHistory.push_back(t);
+} 
+
+void BankAccount::deposit(double depositAmount) { 
+    balance += depositAmount; 
+    saveTransaction(getAccountHolderName(), "Deposit", depositAmount);
+}
+    
 void BankAccount::withdraw(double withdrawAmount) { 
     if ((balance - withdrawAmount) < 0) {
         std::cout << "Insufficient Funds!" << std::endl;
@@ -31,6 +52,7 @@ void BankAccount::withdraw(double withdrawAmount) {
     }
     
     balance -= withdrawAmount; 
+    saveTransaction(getAccountHolderName(), "Withdrawal", withdrawAmount);
     std::cout << "--Withdrawal of $" << withdrawAmount << " successful." << std::endl;
 }
 
@@ -103,3 +125,14 @@ BankAccount BankAccount::createAccountFromInput(bool isLogged) {
     }
 }
 
+void BankAccount::printHistory() {
+    if (transactionHistory.size() == 0) {
+        std::cout << "--You have not made any transactions!" << std::endl;
+    }
+    
+    for (const auto& transaction : transactionHistory) {
+        std::cout << "--Transaction Type: " << transaction.type << std::endl;
+        std::cout << "--Amount: $"  << transaction.amount << std::endl;
+        std::cout << "--Time of $" << transaction.type << ": " << transaction.timestamp << std::endl; 
+    }
+}

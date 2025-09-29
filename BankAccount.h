@@ -2,11 +2,14 @@
 #define BANKACCOUNT_H
 
 #include <string>
+#include "Transaction.h"
+
 class BankAccount {
     private:
         std::string accountNumber;
         std::string accountHolderName;
         double balance; // in dollars
+        std::vector<Transaction> transactionHistory;
     public:
         BankAccount();
         BankAccount(std::string accHolderNameInp, double balanceInp = 0.00);
@@ -18,6 +21,7 @@ class BankAccount {
         void setAccountHolderName(std::string accHolderNameInp);
         virtual void deposit(double depositAmount);
         virtual void withdraw(double withdrawAmount);
+        void saveTransaction(std::string name, std::string type, double amount);
         
         std::string getAccountNumber() const;
         std::string getAccountHolderName() const;
@@ -32,5 +36,6 @@ class BankAccount {
         
         static void printAccount(const BankAccount *&currentUser);
         static BankAccount createAccountFromInput(bool isLogged);
+        void printHistory(); 
 };
 #endif
